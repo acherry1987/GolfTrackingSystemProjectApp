@@ -1,0 +1,86 @@
+
+
+* {
+  /*margin: 0 auto;*/
+  box-sizing: border-box;
+}
+body {
+  background-image: url("/images/golfcrop.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-width: 100%;
+
+  background-position: top;*/
+  /*background-color: black;
+
+  /*opacity: .5;*/
+}
+
+a:link {
+  text-decoration: none;
+  opacity: .7;
+  color: black;
+  font-family: 'Roboto';
+}
+a:hover {
+  color: slategrey;
+  opacity: 1;
+}
+
+
+.navwrap {
+  /*background-color: rgba(69,69,69, .75);*/
+  opacity: .5;
+  /*top: 0;*/
+}
+
+.nav {
+    display: flex;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: space-between;
+    -webkit-flex-wrap: wrap;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    list-style-type: none;
+    -webkit-animation: fadein 3s;
+    /* Safari, Chrome and Opera > 12.1 */
+    top: 0;
+}
+
+#container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+h1 {
+  color: slategrey;
+  font-family: 'Roboto';
+  font-size: 1.6em;
+
+}
+
+.mainstuff h1 {
+  display: flex;
+  font-family: 'Roboto';
+  font-weight: 100;
+  font-style: italic;
+  font-size: 1.9em;
+  opacity: .9;
+}
+
+
+.mainstuff {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10%;
+}
+
+@media screen and (max-width: 600px) {
+
+  .mainstuff h1 {
+    color: white;
+  }
