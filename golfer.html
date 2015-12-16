@@ -1,0 +1,251 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title> </title>
+
+
+  <script src="./js/zim_1.4.4.js"></script>
+	<script src="./js/createjs-2015.05.21.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+  <style>
+
+  * {
+    margin: 0 auto;
+  }
+
+  #canvas {
+    background-color:#f2f1f1;
+  }
+  </style>
+
+
+
+<script type='text/javascript'>//
+window.onload=function(){
+
+var canvas = document.getElementById("Canvas");
+stage = new createjs.Stage(canvas)
+var stageHeight = 600;
+var stageWidth = 900;
+var blockHeight = 70;
+var characterHeight = 96;
+var characterWidth = 75;
+var KEYCODE_SPACE = 32;
+var KEYCODE_LEFT = 37;
+var KEYCODE_RIGHT = 39;
+var jumpSpeed = 1000;
+var xVel = 5;
+var yVel = 0;
+var gravity = 1.2;
+var isJumping = false;
+var moveLeft = false;
+var moveRight = false;
+var characterGround = stageHeight - blockHeight - characterHeight;
+var character;
+var spriteSheet;
+var ground;
+var characterMoving = true;
+var moveUp = false;
+var moveDown = false;
+var wkleft;
+
+function setup() {
+    spritesheet = new createjs.SpriteSheet({
+			"images": ["images/golferspritecropped.png"],
+			"frames": {"height": 160, "count": 10, "width": 130, "regX":2, "regY":7, spacing:0, margin:0,},
+            "animations": { run: [0,10]
+                            // wkleft: [9, 16]
+          }
+		});
+
+var anima = new createjs.Sprite(spritesheet, "run");
+
+function useless(e) {
+  console.log(anima);
+  anima = true;
+
+}
+
+// $(window).mousedown(function(e) {
+//     clearTimeout(this.downTimer);
+//     this.downTimer = setTimeout(function() {
+//         alert('mousedown > 2 sec');
+//
+//     }, 2000);
+// }).mouseup(function(e) {
+//     clearTimeout(this.downTimer);
+// });
+
+		character = new createjs.Sprite(spritesheet);
+		character.framerate = 5;
+        character.x = (stageWidth / 2);
+        character.y = (stageHeight / 2);
+        stage.addChildAt(character, 0);
+
+    createjs.Ticker.addEventListener("tick", tick);
+    document.onkeydown = handleKeyDown;
+    document.onkeyup = handleKeyUp;
+
+    document.onmousedown = useless;
+
+}
+
+var green = new createjs.Shape();
+green.graphics.f("#33CC66").s().p("A61CKQrIg5AAhRQAAhQLIg5QLIg4PtAAQPuAALIA4QLIA5gBBQQABBRrIA5QrIA4vuAAQvtAArIg4g");
+stage.addChild(green);
+green.x = 500;
+green.y = 200;
+
+var cup = new createjs.Shape();
+cup.graphics.f("#CCCCCC").s().p("AhKAeIgigGQgugKAAgOQAAgNAugKQAQgEASgCQAigFAoABQBAAAAtAKQAtAKAAANQAAAOgtAKQgtALhAgBQgoABgigFg");
+stage.addChild(cup);
+cup.x = 500;
+cup.y = 200;
+
+var pole = new createjs.Shape();
+pole.graphics.f().s("#666666").ss(2.5,1,1).p("AAA3vMAAAAvf");
+stage.addChild(pole);
+pole.x = 500;
+pole.y = 107;
+pole.scaleY = .6;
+
+var flag = new createjs.Shape();
+flag.graphics.f("#2ecc71").s().p("AkwCpIAAlRIJgAAIAAFRg");
+stage.addChild(flag);
+flag.x = 469;
+flag.y = 35;
+// pole.scaleY = .6;
+
+var golfball = new zim.Circle(5, "black");
+stage.addChildAt(golfball, 3);
+golfball.x = 560;
+golfball.y = 415;
+
+
+stage.update();
+
+$(window).mousedown(function(e) {
+    clearTimeout(this.downTimer);
+    this.downTimer = setTimeout(function() {
+        // alert('mousedown > 2 sec');
+        createjs.Tween.get(golfball)
+        .to({y:100, x:500}, 400)
+        .to({y:200, x:500}, 500)
+        if(zim.hitTestBounds(cup, golfball) ) {
+            zog("hit");
+            stage.removeChild(golfball);
+            stage.update();
+          }
+      }, 1000);
+}).mouseup(function(e) {
+    clearTimeout(this.downTimer);
+});
+
+
+
+function handleKeyDown(e) {
+    switch (e.keyCode) {
+        case KEYCODE_SPACE:
+        case 88:  // W
+            jump();
+            break;
+        case KEYCODE_LEFT:
+        case 65:  // A
+            moveLeft = true;
+           character.play();
+            break;
+        case KEYCODE_RIGHT:
+        case 68:  // D
+            moveRight = true;
+           character.play();
+            break;
+        case 87:
+            moveUp = true;
+            character.play();
+            break;
+        case 83:
+            moveDown = true;
+            character.play();
+            break;
+    }
+
+}
+
+function handleKeyUp(e) {
+    switch (e.keyCode) {
+        case KEYCODE_LEFT:
+        case 65:  // A
+            moveLeft = false;
+            character.gotoAndStop(0);
+            break;
+        case KEYCODE_RIGHT:
+        case 68:  // D
+            moveRight = false;
+            character.gotoAndStop(0);
+            break;
+        case 87:
+            moveUp = false;
+            character.gotoAndStop(0);
+            break;
+        case 83:
+            moveDown = false;
+            character.gotoAndStop(0);
+            break;
+
+    }
+}
+
+function jump() {
+    if (isJumping == false) {
+        yVel = -15;
+        isJumping = true;
+    }
+}
+
+function tick(event) {
+
+    if (moveLeft) {
+        character.x -= 20;
+        if (character.scaleX > 0) {
+            character.scaleX *= -1;
+            character.x += characterWidth;
+        }
+     }else if (moveRight) {
+        character.x += 20;
+        if (character.scaleX < 0) {
+            character.scaleX *= -1;
+            character.x -= characterWidth;
+        }
+      } else if (moveUp) {
+        character.y -= 20;
+        if (character.scaleY < 0) {
+            character.scaleY *= -1;
+            character.y -= characterWidth;
+          }
+      } else if (moveDown) {
+        character.y += 20;
+        if (character.scaleY < 0) {
+            character.scaleY *= -1;
+            character.y -= characterWidth;
+          }
+        }
+
+    stage.update();
+ }
+
+setup();
+}
+
+</script>
+
+
+</head>
+<body>
+  <canvas id="Canvas" width="900" height="600"></canvas>
+  <div id="bodycolor"> <div>
+</body>
+
+
+</html>
