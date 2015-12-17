@@ -23,6 +23,19 @@ function loadUsers() {
   });
 }
 
+function testAddScore() {
+  addScore(1, 1, "2015-08-20", 0, 90, 20.5);
+}
+function addScore($iduser, $idgolfcourse, $dateplayed, $rawscore, $netscore, $handicap) {
+  // (1, 1, "2015-08-20", 0, 90, 20.5)
+  jQuery.ajax({ type: "POST", url: '/php/golfdb.php', dataType: 'json',
+     data: {functionname: 'addScore', arguments: [$iduser, $idgolfcourse, $dateplayed, $rawscore, $netscore, $handicap]},
+     success: function (obj, textstatus) {
+        console.log(textstatus);
+     }
+  });
+}
+
 function getUser() {
   $id = $("#UserId").val();
   jQuery.ajax({ type: "POST", url: '/php/golfdb.php', dataType: 'json',

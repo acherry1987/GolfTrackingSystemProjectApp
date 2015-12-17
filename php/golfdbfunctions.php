@@ -3,6 +3,19 @@
 
 class GolfDb {
   //$db = new PDO('mysql:host=127.0.0.1;port=8889;dbname=Golf;charset=utf8', 'root', 'root');
+  public function addScore($score) {
+    $db = new PDO('mysql:host=127.0.0.1;port=8889;dbname=Golf;charset=utf8', 'root', 'root');
+    $stmt = $db->prepare("INSERT INTO Score (idUser, idGolfCourse, datePlayed, rawScore, netScore, handicap) VALUES (:idUser, :idGolfCourse, :datePlayed, :rawScore, :netScore, :handicap)");
+    $stmt->bindParam(':idUser', $score->iduser);
+    $stmt->bindParam(':idGolfCourse', $score->idgolfcourse);
+    $stmt->bindParam(':datePlayed', $score->dateplayed);
+    $stmt->bindParam(':netScore', $score->netscore );
+    $stmt->bindParam(':handicap', $score->handicap);
+    $stmt->bindParam(':rawScore', $score->rawscore);
+
+    $stmt->execute();
+
+  }
 
   public function getUsers() {
     //console.log('in get users');

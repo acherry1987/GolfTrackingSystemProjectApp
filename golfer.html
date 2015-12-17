@@ -144,6 +144,24 @@ $(window).mousedown(function(e) {
 });
 
 
+// $(window).mousedown(function(e) {
+//     clearTimeout(this.downTimer);
+//     this.downTimer = setTimeout(function() {
+//         // alert('mousedown > 2 sec');
+//         createjs.Tween.get(golfball)
+//         .to({y:100, x:500}, 400)
+//         .to({y:400, x:500}, 500)
+//         if(zim.hitTestBounds(cup, golfball) ) {
+//             zog("hit");
+//             stage.removeChild(golfball);
+//             stage.update();
+//           }
+//       }, 2000);
+// }).mouseup(function(e) {
+//     clearTimeout(this.downTimer);
+// });
+
+
 
 function handleKeyDown(e) {
     switch (e.keyCode) {

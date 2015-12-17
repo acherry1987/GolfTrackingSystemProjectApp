@@ -1,4 +1,9 @@
 <?php
+
+ini_set( 'display_errors', 1 );
+ini_set( 'display_startup_errors', 1 );
+
+
 include 'classes.php';
 include 'golfdbfunctions.php';
 
@@ -22,6 +27,21 @@ include 'golfdbfunctions.php';
                    $aResult['result'] = $golfdb->getUser($id);
                }
                break;
+             case 'addScore':
+              if( !is_array($_POST['arguments']) || (count($_POST['arguments']) < 6) ) {
+                $aResult['error'] = 'Error in arguments!';
+              } else {
+                $score = new Score();
+                $score->iduser = intval($_POST['arguments'][0]);
+                $score->idgolfcourse = intval($_POST['arguments'][1]);
+                $score->dateplayed = strval($_POST['arguments'][2]);
+                $score->rawscore = intval($_POST['arguments'][3]);
+                $score->netscore = intval($_POST['arguments'][4]);
+                $score->handicap = floatval($_POST['arguments'][5]);
+                $golfdb = new GolfDb();
+                $golfdb->addScore($score);
+              }
+                break;
             case 'getUsers':
                $aResult['users'] = $golfdb->getUsers();
                break;
