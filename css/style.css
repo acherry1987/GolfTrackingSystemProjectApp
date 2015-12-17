@@ -4,42 +4,43 @@
   /*margin: 0 auto;*/
   box-sizing: border-box;
 }
-body {
-  background-image: url("/images/golfcrop.png");
-  background-repeat: no-repeat;
+html {
+  background: url("/images/swoosh.png") no-repeat center center fixed;
+  -webkit-background-size:cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  max-width: 100%;
-  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%);
 
-  background-position: top;*/
-  /*background-color: black;
-
-  /*opacity: .5;*/
 }
 
 img {
-  opacity: .6;
-  width: 10%;
+  opacity: .9;
+  width: 100px;
   height: auto;
-  margin-bottom: 1%;
 }
 
 a:link {
   text-decoration: none;
-  opacity: .7;
-  color: black;
+  opacity: .9;
+  color: white;
   font-family: 'Roboto';
+  font-weight: 100;
 }
 a:hover {
   color: slategrey;
   opacity: 1;
 }
-
+a:visited {
+  text-decoration: none;
+}
+a {
+  color: white;
+  font-weight: 100;
+}
 
 .navwrap {
-  /*background-color: rgba(69,69,69, .75);*/
-  opacity: .5;
-  /*top: 0;*/
+  opacity: .9;
+
 }
 
 .nav {
@@ -52,8 +53,6 @@ a:hover {
     padding-right: 10px;
     list-style-type: none;
     -webkit-animation: fadein 3s;
-    /* Safari, Chrome and Opera > 12.1 */
-    top: 0;
 }
 
 #container {
@@ -63,7 +62,7 @@ a:hover {
 
 }
 h1 {
-  color: slategrey;
+  color: white;
   font-family: 'Roboto';
   font-size: 1.6em;
 
@@ -71,12 +70,14 @@ h1 {
 
 li {
 padding: 5px;
+color: white;
 }
 
 .wrap {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 50px;
 }
 
 .mainstuff h1 {
@@ -84,8 +85,8 @@ padding: 5px;
   font-family: 'Roboto';
   font-weight: 100;
   font-style: italic;
-  font-size: 1.9em;
-  opacity: .9;
+  font-size: 2.5em;
+  opacity: .7;
 }
 
 
@@ -94,14 +95,12 @@ padding: 5px;
   position: relative;
   align-items: center;
   justify-content: center;
-  padding-top: 10%;
+  padding-top: 15%;
 }
 
 li:first-child {
   border: 1px solid slategrey;
   opacity: .9;
-
-  /*border-spacing: 5px;*/
   border-radius: 2px;
 }
 
@@ -110,9 +109,25 @@ li:first-child:hover {
   opacity: .5;
 }
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 @media screen and (max-width: 600px) {
 
-  .mainstuff h1 {
-    color: white;
+  .nav {
+    flex-direction: column;
+
+    align-items: center;
+
+    -webkit-flex-direction: column;
+    -webkit-justify-content: space-around;
+
   }
+
+}

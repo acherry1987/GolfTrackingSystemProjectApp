@@ -8,39 +8,84 @@
       <link rel="stylesheet" type="text/css" href="/css/stylepage2.css">
       <link href='https://fonts.googleapis.com/css?family=Roboto:300italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
       <link href='https://fonts.googleapis.com/css?family=Roboto:100italic' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
   </head>
   <body>
 
     <div class="header">
       <img src="/images/swoosh.png" alt="search" id="search">
     </div>
+    <div class="navwrap">
+      <div class="nav">
+       <li><a href="index.html">HOME</a></li>
+       <li><a href="golfer.html">GAME</a></li>
+       <li><a href="#">ABOUT</a></li>
+       <li><a href="#">HOW</a></li>
+       <li><a href="#">PRODUCTION</a></li>
+     </div>
+    </div>
+<div class="line"> </div>
     <div class="mainstuff">
         <h1> TRAC GOLF <h1>
 
     </div>
   <div class="wrap">
-    <img src="/images/searchicon.png" alt="search" id="search">
-  <!-- <div id="container"> <h1> YOYOYO <h1> </div> -->
+    <img src="/images/rsz_searchicon.png" alt="search" id="search">
 </div>
-<div class="navwrap">
-  <div class="nav">
-   <li><a href="#">SIGN IN</a></li>
-   <li><a href="#">GAME</a></li>
-   <li><a href="#">ABOUT</a></li>
-   <li><a href="#">HOW</a></li>
-   <li><a href="#">PRODUCTION</a></li>
- </div>
-</div>
+
 
 <div class="heading">
-  <h1> USERS </h1>
+  <a href="javascript:loadUsers()"> <h1> USERS </h1> </a>
 </div>
+<script>
+    function loadUsers() {
+      jQuery.ajax({ type: "POST", url: '/php/golfdb.php', dataType: 'json',
+         data: {functionname: 'getUsers', arguments: [1]},
+         success: function (obj, textstatus) {
+              if( !('error' in obj) ) {
+                for (var i = 0; i < obj.users.length; i++) {
+                     $user = obj.users[i];
+                     console.log(JSON.stringify(obj));
+                     //console.log(obj.users[i].email);
+                     $userText = "id: " + $user.id
+                             + ", first: " + $user.firstName
+                             + ", last: " + $user.lastName
+                            //  + ", email: " + $user.email
+                             + ", handicap: " + $user.handicap;
+                     $("#users").append("<p>" + $userText + "</p>");
+                }
+              }
+              else {
+                  console.log(obj.error);
+              }
+         }
+      });
+    }
 
 
-
-
-
+function getUser() {
+  $id = $("#UserId").val();
+  jQuery.ajax({ type: "POST", url: '/php/golfdb.php', dataType: 'json',
+     data: {functionname: 'getUser', arguments: [$id]},
+     success: function (obj, textstatus) {
+          if( !('error' in obj) ) {
+              console.log(JSON.stringify(obj));
+              $user = "id: " + obj.result.id
+                      + ", first: " + obj.result.firstName
+                      + ", last: " + obj.result.lastName
+                      + ", email: " + obj.result.email
+                      + ", handicap: " + obj.result.handicap;
+              $("#user").append("<p>" + $user + "</p>");
+          }
+          else {
+              console.log(obj.error);
+          }
+     }
+  });
+};
+</script>
 
 
   </body>
+
 </html>
