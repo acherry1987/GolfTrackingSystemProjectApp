@@ -13,7 +13,7 @@
   <body>
     <div class="navwrap">
       <div class="nav">
-       <li><a href="javascript:loadUsers()">USERS</a></li>
+       <li><a href="javascript:loadUsers()">LOAD USERS</a></li>
        <li><a href="#">ADD A SCORE</a></li>
        <li><a href="#">HOW</a></li>
        <li><a href="#">PRODUCTION</a></li>
@@ -23,7 +23,6 @@
 
   <div class="users">
     <div id="users">
-    <!-- <p id="users"></p> -->
     </div>
   </div>
 
@@ -97,7 +96,7 @@
                      $user = obj.users[i];
                      console.log(JSON.stringify(obj));
                      //console.log(obj.users[i].email);
-                     $userText = $user.name + "_____________" + "        Handicap:         " + $user.handicap;
+                     $userText = $user.name + " "+ "" + "" + "        Handicap:         " + $user.handicap;
                      $("#users").append("<p>" + $userText + "</p>");
                 }
               }

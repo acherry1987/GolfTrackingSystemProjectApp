@@ -95,15 +95,18 @@ color: white;
   font-family: 'Roboto';
   font-weight: 100;
   -webkit-animation: fadein 15s;
-  padding-top: 30px;
+  padding-top: 10px;
+  margin-top: 5%;
+
 }
 
 #users {
-  -webkit-animation: fadein 15s;
+  -webkit-animation: fadein 5s;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  /*padding:*/
 }
 .mainstuff {
   display: flex;
@@ -111,6 +114,7 @@ color: white;
   align-items: center;
   justify-content: center;
   padding-top: 15%;
+  flex-wrap: wrap;
 }
 
 .newscore select {
@@ -148,6 +152,13 @@ color: white;
 }
 .button {
   padding-top: 10px;
+
+}
+
+button {
+  font-size: 1.5em;
+  cursor: pointer;
+  font-family: 'Roboto';
 }
 
 .checkboxlabel {
