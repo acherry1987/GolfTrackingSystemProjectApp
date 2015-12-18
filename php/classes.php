@@ -15,5 +15,10 @@ class Score {
   public $rawscore = 0;
 }
 
+class GolfCourse {
+  public $name = "";
+  public $rating = 0;
+  public $slope = 0;
+}
 
 ?>
