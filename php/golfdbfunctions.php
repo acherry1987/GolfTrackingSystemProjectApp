@@ -1,6 +1,7 @@
 <?php
 
 class GolfDb {
+  // Keep a single database connect per class
   private $db = null;
 
   function __construct() {
@@ -13,6 +14,7 @@ class GolfDb {
     $golfcourse = $this->getGolfCourse($score->coursename);
     // This is the calculation to figure out the handicap for a single round
     $handicap = floatval(($score->netscore - $golfcourse->rating) * 113 / $golfcourse->slope);
+
     $stmt = $this->db->prepare("INSERT INTO Score (userName, courseName, datePlayed, rawScore, netScore, handicap) VALUES (:userName, :courseName, :datePlayed, :rawScore, :netScore, :handicap)");
     $stmt->bindParam(':userName', $score->username);
     $stmt->bindParam(':courseName', $score->coursename);

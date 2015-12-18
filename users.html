@@ -36,7 +36,12 @@
 
 <div class="heading">
   <a href="javascript:loadUsers()"> <h1> USERS </h1> </a>
+  <p id="users"></p>
 </div>
+
+
+
+
 <script>
     function loadUsers() {
       jQuery.ajax({ type: "POST", url: '/php/golfdb.php', dataType: 'json',
@@ -47,11 +52,7 @@
                      $user = obj.users[i];
                      console.log(JSON.stringify(obj));
                      //console.log(obj.users[i].email);
-                     $userText = "id: " + $user.id
-                             + ", first: " + $user.firstName
-                             + ", last: " + $user.lastName
-                            //  + ", email: " + $user.email
-                             + ", handicap: " + $user.handicap;
+                     $userText = $user.name + " (" + $user.handicap + ")";
                      $("#users").append("<p>" + $userText + "</p>");
                 }
               }

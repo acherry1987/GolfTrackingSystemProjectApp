@@ -1,11 +1,11 @@
 
 function testAddScore() {
-  addScore('Andrew Cherry', 'Grey Silo', "2015-08-20", 0, 90, 20.5);
+  addScore('Andrew Cherry', 'Grey Silo', "2015-08-23", 81, 80);
 }
-function addScore($username, $coursename, $dateplayed, $rawscore, $netscore, $handicap) {
+function addScore($username, $coursename, $dateplayed, $rawscore, $netscore) {
   // (1, 1, "2015-08-20", 0, 90, 20.5)
   jQuery.ajax({ type: "POST", url: '/php/golfdb.php', dataType: 'json',
-     data: {functionname: 'addScore', arguments: [$username, $coursename, $dateplayed, $rawscore, $netscore, $handicap]},
+     data: {functionname: 'addScore', arguments: [$username, $coursename, $dateplayed, $rawscore, $netscore, 0]},
      success: function (obj, textstatus) {
         console.log(textstatus);
      }
