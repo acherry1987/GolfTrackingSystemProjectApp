@@ -1,7 +1,5 @@
 
-
 * {
-  /*margin: 0 auto;*/
   box-sizing: border-box;
 }
 html {
@@ -10,15 +8,12 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
 }
-
 img {
   opacity: .9;
   width: 100px;
   height: auto;
 }
-
 a:link {
   text-decoration: none;
   opacity: .9;
@@ -37,12 +32,9 @@ a {
   color: white;
   font-weight: 100;
 }
-
 .navwrap {
   opacity: .9;
-
 }
-
 .nav {
     display: flex;
     -webkit-flex-direction: row;
@@ -54,32 +46,26 @@ a {
     list-style-type: none;
     -webkit-animation: fadein 3s;
 }
-
 #container {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 h1 {
   color: white;
   font-family: 'Roboto';
   font-size: 1.6em;
-
 }
-
 li {
 padding: 5px;
 color: white;
 }
-
 .wrap {
   display: flex;
   align-items: center;
   justify-content: center;
   padding-left: 50px;
 }
-
 .mainstuff h1 {
   display: flex;
   font-family: 'Roboto';
@@ -87,36 +73,34 @@ color: white;
   font-style: italic;
   font-size: 2.5em;
   opacity: .7;
-  -webkit-animation: fadein 15s;
+  -webkit-animation: fadein 7s;
 }
-
 .users {
   color: white;
   font-family: 'Roboto';
   font-weight: 100;
-  -webkit-animation: fadein 15s;
+  -webkit-animation: fadein 5s;
   padding-top: 10px;
-  margin-top: 5%;
-
+  margin-top: 1%;
+  padding-right: 10px;
 }
-
 #users {
   -webkit-animation: fadein 5s;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  /*padding:*/
 }
 .mainstuff {
   display: flex;
   position: relative;
   align-items: center;
   justify-content: center;
-  padding-top: 15%;
+  padding-top: 10%;
   flex-wrap: wrap;
+  animation-name: move;
+  animation-duration: 2s;
 }
-
 .newscore select {
   display: flex;
   flex-direction: column;
@@ -129,9 +113,7 @@ color: white;
   padding: 5px;
   width: 150px;
   height: 30px;
-
 }
-
 .newscore button {
   background: transparent;
   color: white;
@@ -140,7 +122,6 @@ color: white;
   width: 200px;
   height: 40px;
 }
-
 .newscore {
   display: flex;
   flex-direction: column;
@@ -148,25 +129,37 @@ color: white;
   justify-content: center;
   background: transparent;
   opacity: .9;
-
+  margin-top: 0;
+  -webkit-animation: fadein 4s;
 }
 .button {
   padding-top: 10px;
-
 }
-
+table {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-family: 'Roboto';
+  line-height: 1;
+  border-spacing: 1.2em;
+}
+th {
+  height: 20px;
+  text-align: left;
+}
 button {
   font-size: 1.5em;
   cursor: pointer;
   font-family: 'Roboto';
 }
-
 .checkboxlabel {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
 }
 .date {
   display: flex;
@@ -174,22 +167,23 @@ button {
   align-items: center;
   justify-content: center;
 }
+.invis {
+  visibility: hidden;
+}
 .invisible {
   visibility: hidden;
-
 }
-
-
 li:first-child {
   border: 1px solid slategrey;
   opacity: .9;
   border-radius: 2px;
 }
-
 li:first-child:hover {
   background-color: #34495E;
   opacity: .5;
 }
+
+/*------key frames------*/
 
 @keyframes fadein {
   from {
@@ -200,15 +194,21 @@ li:first-child:hover {
   }
 }
 
-@keyframes fadeout {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
+@keyframes move {
+   /*from to */
+   0% {
+     left: 0px;
+   }
 
+   50% {
+     left: 100px;
+   }
+   100% {
+     left: 0px;
+   }
+
+
+/*phone size media query */
 
 @media screen and (max-width: 600px) {
 
@@ -219,7 +219,5 @@ li:first-child:hover {
 
     -webkit-flex-direction: column;
     -webkit-justify-content: space-around;
-
   }
-
 }

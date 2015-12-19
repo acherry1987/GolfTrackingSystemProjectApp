@@ -1,10 +1,8 @@
-window.onload = function() {
-
-	// bind event listener to click
-	document.addEventListener( 'click', respondToClick );
-}
-var tracheading = document.querySelector('.mainstuff');
-
-function respondToClick() {
+function showingscore() {
+	var newscore = document.querySelector('.invis');
+	newscore.className = "newscore";
+	var tracheading = document.querySelector('.mainstuff');
+	var image = document.querySelector('.wrap');
 	tracheading.className = "invisible";
+	image.className = "invisible";
 }

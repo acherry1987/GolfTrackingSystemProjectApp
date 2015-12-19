@@ -1,314 +1,279 @@
 <html>
+
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title> </title>
 
 
   <script src="./js/zim_1.4.4.js"></script>
-	<script src="./js/createjs-2015.05.21.min.js"></script>
+  <script src="./js/createjs-2015.05.21.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 
   <style>
+    * {
+      margin: 0 auto;
+    }
 
-  * {
-    margin: 0 auto;
-  }
+    body {
+      background-color: #f2f1f1;
+    }
 
-  body {
-    background-color: #f2f1f1;
-  }
-  #canvas {
-    background-color:#f2f1f1;
-    /*background: transparent;*/
-    background-size: cover;
-  }
+    #canvas {
+      background-color: #f2f1f1;
+      background-size: cover;
+    }
   </style>
 
 
 
-<script type='text/javascript'>//
-window.onload=function(){
+  <script type='text/javascript'>
+    //
+    window.onload = function() {
 
-var canvas = document.getElementById("Canvas");
-stage = new createjs.Stage(canvas)
-var stageHeight = 600;
-var stageWidth = 900;
-var blockHeight = 70;
-var characterHeight = 96;
-var characterWidth = 75;
-var KEYCODE_SPACE = 32;
-var KEYCODE_LEFT = 37;
-var KEYCODE_RIGHT = 39;
-var jumpSpeed = 1000;
-var xVel = 5;
-var yVel = 0;
-var gravity = 1.2;
-var isJumping = false;
-var moveLeft = false;
-var moveRight = false;
-var characterGround = stageHeight - blockHeight - characterHeight;
-var character;
-var spriteSheet;
-var ground;
-var characterMoving = true;
-var moveUp = false;
-var moveDown = false;
-var wkleft;
+      var canvas = document.getElementById("Canvas");
+      stage = new createjs.Stage(canvas)
+      var stageHeight = 600;
+      var stageWidth = 900;
+      var blockHeight = 70;
+      var characterHeight = 96;
+      var characterWidth = 75;
+      var KEYCODE_SPACE = 32;
+      var KEYCODE_LEFT = 37;
+      var KEYCODE_RIGHT = 39;
+      var jumpSpeed = 1000;
+      var xVel = 5;
+      var yVel = 0;
+      var gravity = 1.2;
+      var isJumping = false;
+      var moveLeft = false;
+      var moveRight = false;
+      var characterGround = stageHeight - blockHeight - characterHeight;
+      var character;
+      var spriteSheet;
+      var ground;
+      var characterMoving = true;
+      var moveUp = false;
+      var moveDown = false;
+      var wkleft;
 
-function setup() {
-    spritesheet = new createjs.SpriteSheet({
-			"images": ["images/golfspritesamesize.png"],
-			"frames": {"height": 230, "count": 7, "width": 60, "regX":2, "regY":7, "spacing":0, margin:0,},
-            "animations": { run: [0,10], speed: .1
-
-                            // wkleft: [9, 16]
+      function setup() {
+        spritesheet = new createjs.SpriteSheet({
+          "images": ["images/golfspritesamesize.png"],
+          "frames": {
+            "height": 230,
+            "count": 7,
+            "width": 60,
+            "regX": 2,
+            "regY": 7,
+            "spacing": 0,
+            margin: 0,
+          },
+          "animations": {
+            run: [0, 10],
+            speed: .1
           }
-		});
+        });
 
-var anima = new createjs.Sprite(spritesheet, "run");
+        var anima = new createjs.Sprite(spritesheet, "run");
 
-function useless(e) {
-  console.log(anima);
-  anima = true;
+        function useless(e) {
+          console.log(anima);
+          anima = true;
 
-}
-		character = new createjs.Sprite(spritesheet);
-		character.frequency = 5;
+        }
+        character = new createjs.Sprite(spritesheet);
+        character.frequency = 5;
         character.x = (stageWidth / 2);
         character.y = (stageHeight / 2);
         stage.addChildAt(character, 0);
 
-    createjs.Ticker.addEventListener("tick", tick);
-    // document.onkeydown = handleKeyDown;
-    // document.onkeyup = handleKeyUp;
+        createjs.Ticker.addEventListener("tick", tick);
 
-    // document.onmousedown = useless;
-
-}
+      }
 
 
-var reset = new zim.Rectangle(120, 40, "lightgreen", null, null, 5);
-reset.x = 100;
-reset.y = 400;
+      var reset = new zim.Rectangle(120, 40, "lightgreen", null, null, 5);
+      reset.x = 100;
+      reset.y = 400;
 
-var instructions = new createjs.Text("Mousedown to Play!", "20px Arial", "lightgreen");
-instructions.x = 600;
-instructions.y = 500;
-instructions.textBaseline = "alphabetic";
-stage.addChild(instructions);
-
-
-var resettext = new createjs.Text("RESET", "20px Arial", "white");
-resettext.x = 123;
-resettext.y = 429;
-resettext.textBaseline = "alphabetic";
-
-var tooshort = new createjs.Text("OOPS! Too short!", "20px Arial", "#22313F");
-tooshort.x = 90;
-tooshort.y = 510;
-tooshort.textBaseline = "alphabetic";
-
-var toolong = new createjs.Text("OOPS! Too long!", "20px Arial", "#22313F");
-toolong.x = 90;
-toolong.y = 510;
-toolong.textBaseline = "alphabetic";
-
-var youwin = new createjs.Text("YAY! YOU WIN!", "20px Arial", "#22313F");
-youwin.x = 90;
-youwin.y = 510;
-youwin.textBaseline = "alphabetic";
-
-var green = new createjs.Shape();
-green.graphics.f("#90C695").s().p("A61CKQrIg5AAhRQAAhQLIg5QLIg4PtAAQPuAALIA4QLIA5gBBQQABBRrIA5QrIA4vuAAQvtAArIg4g");
-stage.addChild(green);
-green.x = 500;
-green.y = 200;
-
-var cup = new createjs.Shape();
-cup.graphics.f("#CCCCCC").s().p("AhKAeIgigGQgugKAAgOQAAgNAugKQAQgEASgCQAigFAoABQBAAAAtAKQAtAKAAANQAAAOgtAKQgtALhAgBQgoABgigFg");
-stage.addChild(cup);
-cup.x = 500;
-cup.y = 200;
-
-var pole = new createjs.Shape();
-pole.graphics.f().s("#666666").ss(2.5,1,1).p("AAA3vMAAAAvf");
-stage.addChild(pole);
-pole.x = 500;
-pole.y = 107;
-pole.scaleY = .6;
-
-var flag = new createjs.Shape();
-flag.graphics.f("#90C695").s().p("AkwCpIAAlRIJgAAIAAFRg");
-stage.addChild(flag);
-flag.x = 469;
-flag.y = 35;
-// pole.scaleY = .6;
-
-var golfball = new zim.Circle(4, "black");
-stage.addChildAt(golfball, 3);
-golfball.x = 500;
-golfball.y = 490;
-
-var cup2 = new zim.Circle(10, "lightgrey");
-stage.addChildAt(cup2, -1);
-
-cup2.x = 500;
-cup2.y = 200;
-cup2.scaleX = 2;
-
-stage.update();
+      var instructions = new createjs.Text("Mousedown to Play!", "20px Arial", "lightgreen");
+      instructions.x = 600;
+      instructions.y = 500;
+      instructions.textBaseline = "alphabetic";
+      stage.addChild(instructions);
 
 
-var swingTime = 0;
-var swingStart = 0;
+      var resettext = new createjs.Text("RESET", "20px Arial", "white");
+      resettext.x = 123;
+      resettext.y = 429;
+      resettext.textBaseline = "alphabetic";
 
-stage.on("stagemousedown", function() {
-  character.play();
-  swingStart = Date.now();
+      var tooshort = new createjs.Text("OOPS! Too short!", "20px Arial", "#22313F");
+      tooshort.x = 90;
+      tooshort.y = 510;
+      tooshort.textBaseline = "alphabetic";
 
-});
+      var toolong = new createjs.Text("OOPS! Too long!", "20px Arial", "#22313F");
+      toolong.x = 90;
+      toolong.y = 510;
+      toolong.textBaseline = "alphabetic";
+
+      var youwin = new createjs.Text("YAY! YOU WIN!", "20px Arial", "#22313F");
+      youwin.x = 90;
+      youwin.y = 510;
+      youwin.textBaseline = "alphabetic";
+
+      var green = new createjs.Shape();
+      green.graphics.f("#90C695").s().p("A61CKQrIg5AAhRQAAhQLIg5QLIg4PtAAQPuAALIA4QLIA5gBBQQABBRrIA5QrIA4vuAAQvtAArIg4g");
+      stage.addChild(green);
+      green.x = 500;
+      green.y = 200;
+
+      var cup = new createjs.Shape();
+      cup.graphics.f("#CCCCCC").s().p("AhKAeIgigGQgugKAAgOQAAgNAugKQAQgEASgCQAigFAoABQBAAAAtAKQAtAKAAANQAAAOgtAKQgtALhAgBQgoABgigFg");
+      stage.addChild(cup);
+      cup.x = 500;
+      cup.y = 200;
+
+      var pole = new createjs.Shape();
+      pole.graphics.f().s("#666666").ss(2.5, 1, 1).p("AAA3vMAAAAvf");
+      stage.addChild(pole);
+      pole.x = 500;
+      pole.y = 107;
+      pole.scaleY = .6;
+
+      var flag = new createjs.Shape();
+      flag.graphics.f("#90C695").s().p("AkwCpIAAlRIJgAAIAAFRg");
+      stage.addChild(flag);
+      flag.x = 469;
+      flag.y = 35;
 
 
-stage.on("stagemouseup", function () {
-  character.gotoAndStop(7);
-  swingTime = Date.now() - swingStart;
-  zog(swingTime);
-  if (swingTime > 500 && swingTime < 700) {
-  createjs.Tween.get(golfball)
-  .to({y:100, x:500}, 400)
-  .to({y:200, x:500}, 500)
-  stage.addChild(youwin)
-  stage.addChild(reset)
-  stage.addChild(resettext)
-} else if (swingTime >= 700) {
-  createjs.Tween.get(golfball)
-  .to({y:300, x:500}, 400)
-  .to({y:50, x:560}, 500)
-  stage.addChild(toolong)
-  stage.addChild(reset)
-  stage.addChild(resettext)
-}
-  else if (swingTime > 150 && swingTime <= 500) {
-  createjs.Tween.get(golfball)
-  .to({y:400, x:500}, 50)
-  .to({y:300, x:560}, 400)
-  stage.addChild(tooshort)
-  stage.addChild(reset)
-  stage.addChild(resettext)
-}
-});
+      var golfball = new zim.Circle(4, "black");
+      stage.addChildAt(golfball, 3);
+      golfball.x = 500;
+      golfball.y = 490;
 
-createjs.Ticker.framerate = 8;
+      var cup2 = new zim.Circle(10, "lightgrey");
+      stage.addChildAt(cup2, -1);
 
-reset.on("click", function(e){
-  createjs.Tween.get(golfball)
-  .to({y:490, x:500}, 400);
-  stage.removeChild(tooshort);
-  stage.removeChild(toolong);
-  stage.removeChild(youwin);
-})
+      cup2.x = 500;
+      cup2.y = 200;
+      cup2.scaleX = 2;
 
-// function handleKeyDown(e) {
-//     switch (e.keyCode) {
-//         case KEYCODE_SPACE:
-//         case 88:  // W
-//             jump();
-//             break;
-//         case KEYCODE_LEFT:
-//         case 65:  // A
-//             moveLeft = true;
-//            character.play();
-//             break;
-//         case KEYCODE_RIGHT:
-//         case 68:  // D
-//             moveRight = true;
-//            character.play();
-//             break;
-//         case 87:
-//             moveUp = true;
-//             character.play();
-//             break;
-//         case 83:
-//             moveDown = true;
-//             character.play();
-//             break;
-//     }
-//
-// }
+      stage.update();
 
-// function handleKeyUp(e) {
-//     switch (e.keyCode) {
-//         case KEYCODE_LEFT:
-//         case 65:  // A
-//             moveLeft = false;
-//             character.gotoAndStop(0);
-//             break;
-//         case KEYCODE_RIGHT:
-//         case 68:  // D
-//             moveRight = false;
-//             character.gotoAndStop(0);
-//             break;
-//         case 87:
-//             moveUp = false;
-//             character.gotoAndStop(0);
-//             break;
-//         case 83:
-//             moveDown = false;
-//             character.gotoAndStop(0);
-//             break;
-//
-//     }
-// }
 
-// function jump() {
-//     if (isJumping == false) {
-//         yVel = -15;
-//         isJumping = true;
-//     }
-// }
+      var swingTime = 0;
+      var swingStart = 0;
 
-function tick(event) {
+      stage.on("stagemousedown", function() {
+        character.play();
+        swingStart = Date.now();
+      });
 
-    if (moveLeft) {
-        character.x -= 20;
-        if (character.scaleX > 0) {
+      stage.on("stagemouseup", function() {
+        character.gotoAndStop(7);
+        swingTime = Date.now() - swingStart;
+        zog(swingTime);
+        if (swingTime > 500 && swingTime < 700) {
+          createjs.Tween.get(golfball)
+            .to({
+              y: 100,
+              x: 500
+            }, 400)
+            .to({
+              y: 200,
+              x: 500
+            }, 500)
+          stage.addChild(youwin)
+          stage.addChild(reset)
+          stage.addChild(resettext)
+        } else if (swingTime >= 700) {
+          createjs.Tween.get(golfball)
+            .to({
+              y: 300,
+              x: 500
+            }, 400)
+            .to({
+              y: 50,
+              x: 560
+            }, 500)
+          stage.addChild(toolong)
+          stage.addChild(reset)
+          stage.addChild(resettext)
+        } else if (swingTime > 150 && swingTime <= 500) {
+          createjs.Tween.get(golfball)
+            .to({
+              y: 400,
+              x: 500
+            }, 50)
+            .to({
+              y: 300,
+              x: 560
+            }, 400)
+          stage.addChild(tooshort)
+          stage.addChild(reset)
+          stage.addChild(resettext)
+        }
+      });
+
+      createjs.Ticker.framerate = 8;
+
+      reset.on("click", function(e) {
+        createjs.Tween.get(golfball)
+          .to({
+            y: 490,
+            x: 500
+          }, 400);
+        stage.removeChild(tooshort);
+        stage.removeChild(toolong);
+        stage.removeChild(youwin);
+      })
+
+      function tick(event) {
+
+        if (moveLeft) {
+          character.x -= 20;
+          if (character.scaleX > 0) {
             character.scaleX *= -1;
             character.x += characterWidth;
-        }
-     }else if (moveRight) {
-        character.x += 20;
-        if (character.scaleX < 0) {
+          }
+        } else if (moveRight) {
+          character.x += 20;
+          if (character.scaleX < 0) {
             character.scaleX *= -1;
             character.x -= characterWidth;
-        }
-      } else if (moveUp) {
-        character.y -= 20;
-        if (character.scaleY < 0) {
+          }
+        } else if (moveUp) {
+          character.y -= 20;
+          if (character.scaleY < 0) {
             character.scaleY *= -1;
             character.y -= characterWidth;
           }
-      } else if (moveDown) {
-        character.y += 20;
-        if (character.scaleY < 0) {
+        } else if (moveDown) {
+          character.y += 20;
+          if (character.scaleY < 0) {
             character.scaleY *= -1;
             character.y -= characterWidth;
           }
         }
 
-    stage.update();
- }
+        stage.update();
+      }
 
-setup();
-}
-
-</script>
+      setup();
+    }
+  </script>
 
 
 </head>
+
 <body>
   <canvas id="Canvas" width="900" height="600"></canvas>
-  <div id="bodycolor"> <div>
+  <div id="bodycolor">
+    <div>
 </body>
 
 
